@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState,useRef } from "react";
+import React, { useState,useRef } from "react";
 
 const Editor = styled.div`
 border: 1px solid gray;
@@ -31,7 +31,7 @@ const Button = styled.button`
     cursor:pointer;
 `
 
-const DiaryEditor = () =>{
+const DiaryEditor = ({onCreate}) =>{
     const [state,setState] = useState({
         author:"",
         content:"",
@@ -59,9 +59,18 @@ const DiaryEditor = () =>{
             contentInput.current.focus();
             return;
         }
-        console.log(state);
+        
+        console.log(state.author,state.content,state.emotion);
+        onCreate(state.author,state.content,state.emotion);
         alert("저장 성공!");
+        setState({
+            author:"",
+            content:"",
+            emotion:1
+        });
     };
+    
+    
     
     return(
         <Editor>
@@ -108,4 +117,4 @@ const DiaryEditor = () =>{
     );
 };
 
-export default DiaryEditor;
+export default React.memo(DiaryEditor);
